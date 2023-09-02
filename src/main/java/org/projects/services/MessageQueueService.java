@@ -40,7 +40,7 @@ public class MessageQueueService {
             try {
                 retryStrategy.push(subscription,message,maxRetryAttempts);
             }
-            catch (RetryLimitExhaustedException exception){
+            catch (RetryLimitExhaustedException | InterruptedException exception){
                 dlq.publish(dlqErrorTopic,message);
             } finally {
                 subscription.getOffset().incrementAndGet();
